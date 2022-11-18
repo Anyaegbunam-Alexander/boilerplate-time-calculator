@@ -1,17 +1,17 @@
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-def add_time(start, duration, o_day=None):
-    if o_day == None:
-        day = 0
+def add_time(start, duration, display_day=None):
+    if display_day == None:
+        current_day = 0
     else:
-        o_day = o_day.capitalize()
-        day = days.index(o_day)   
+        display_day = display_day.capitalize()
+        current_day = days.index(display_day)   
 
     start = start.split(':')
     hr = start[0]
-    m_am = start[1].split()
-    mins = m_am[0]
-    am_pm = m_am[1]
+    time_suffix = start[1].split()
+    mins = time_suffix[0]
+    am_pm = time_suffix[1]
     n_days = 0
 
     duration = duration.split(':')
@@ -31,10 +31,10 @@ def add_time(start, duration, o_day=None):
             am_pm = 'PM'
         elif am_pm == 'PM':
             am_pm = 'AM'
-            if day == 6:
-                day = 0
+            if current_day == 6:
+                current_day = 0
             else:
-                day += 1
+                current_day += 1
             n_days += 1
     
     if new_mins < 10:
@@ -47,14 +47,14 @@ def add_time(start, duration, o_day=None):
     new_mins = str(new_mins)
 
     if not n_days:
-        str_days = ''
+        str_n_days = ''
     if n_days == 1:
-        str_days = ' (next day)'
+        str_n_days = ' (next day)'
     elif n_days > 1:
-        str_days = f' ({n_days} days later)'
+        str_n_days = f' ({n_days} days later)'
     
-    if o_day == None:
-        new_time = f'{new_hr}:{new_mins} {am_pm}{str_days}'
+    if display_day == None:
+        new_time = f'{new_hr}:{new_mins} {am_pm}{str_n_days}'
     else:
-        new_time = f'{new_hr}:{new_mins} {am_pm}, {days[day]}{str_days}'
+        new_time = f'{new_hr}:{new_mins} {am_pm}, {days[current_day]}{str_n_days}'
     return new_time
